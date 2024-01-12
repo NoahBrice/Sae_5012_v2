@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TypeBlocRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TypeBlocRepository::class)]
@@ -20,6 +22,14 @@ class TypeBloc
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $info_bloc_path = null;
+
+    #[ORM\OneToMany(mappedBy: 'TypeBloc', targetEntity: Bloc::class)]
+    private Collection $blocs;
+
+    public function __construct()
+    {
+        $this->blocs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -46,6 +56,36 @@ class TypeBloc
     public function setInfoBlocPath(?string $info_bloc_path): static
     {
         $this->info_bloc_path = $info_bloc_path;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bloc>
+     */
+    public function getBlocs(): Collection
+    {
+        return $this->blocs;
+    }
+
+    public function addBloc(Bloc $bloc): static
+    {
+        if (!$this->blocs->contains($bloc)) {
+            $this->blocs->add($bloc);
+            $bloc->setTypeBloc($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBloc(Bloc $bloc): static
+    {
+        if ($this->blocs->removeElement($bloc)) {
+            // set the owning side to null (unless already changed)
+            if ($bloc->getTypeBloc() === $this) {
+                $bloc->setTypeBloc(null);
+            }
+        }
 
         return $this;
     }

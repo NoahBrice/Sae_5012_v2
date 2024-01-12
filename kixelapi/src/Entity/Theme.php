@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\DataSetRepository;
+use App\Repository\ThemeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: DataSetRepository::class)]
+#[ORM\Entity(repositoryClass: ThemeRepository::class)]
 #[ApiResource]
-class DataSet
+class Theme
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,10 +18,10 @@ class DataSet
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $json_path = null;
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
 
-    #[ORM\ManyToOne(inversedBy: 'dataSets')]
+    #[ORM\ManyToOne(inversedBy: 'themes')]
     private ?Site $site = null;
 
     public function getId(): ?int
@@ -41,14 +41,14 @@ class DataSet
         return $this;
     }
 
-    public function getJsonPath(): ?string
+    public function getPath(): ?string
     {
-        return $this->json_path;
+        return $this->path;
     }
 
-    public function setJsonPath(?string $json_path): static
+    public function setPath(string $path): static
     {
-        $this->json_path = $json_path;
+        $this->path = $path;
 
         return $this;
     }

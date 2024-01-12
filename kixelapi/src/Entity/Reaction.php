@@ -18,6 +18,12 @@ class Reaction
     #[ORM\Column(nullable: true)]
     private ?int $note = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reactions')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reactions')]
+    private ?Bloc $bloc = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,6 +37,30 @@ class Reaction
     public function setNote(?int $note): static
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getBloc(): ?Bloc
+    {
+        return $this->bloc;
+    }
+
+    public function setBloc(?Bloc $bloc): static
+    {
+        $this->bloc = $bloc;
 
         return $this;
     }
