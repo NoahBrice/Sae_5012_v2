@@ -31,10 +31,10 @@ class UserCrudController extends AbstractCrudController
             "password",
             ArrayField::new('roles'),
             AssociationField::new('site')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $sites = $entity->getSite();
+                $associatedEntitys = $entity->getPage();
                 $label = "";
-                foreach ($sites as $site) {
-                    $label = $label . $site->getNom() . "(" . $site->getId() . ")" . ", ";
+                foreach ($associatedEntitys as $associatedEntity) {
+                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
                 }
                 return $label;
             }),
