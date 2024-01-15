@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Entity\Article;
+use App\Entity\Bloc;
+use App\Entity\Commentaire;
+use App\Entity\DataSet;
+use App\Entity\Page;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -50,6 +54,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-list', User::class);
         yield MenuItem::linkToCrud('Articles', 'fas fa-list', Article::class);
+        yield MenuItem::linkToCrud('Blocs', 'fas fa-list', Bloc::class);
+        yield MenuItem::linkToCrud('Commentaires', 'fas fa-list', Commentaire::class);
+        yield MenuItem::linkToCrud('Data Sets', 'fas fa-list', DataSet::class);
+        yield MenuItem::linkToCrud('Page', 'fas fa-list', Page::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

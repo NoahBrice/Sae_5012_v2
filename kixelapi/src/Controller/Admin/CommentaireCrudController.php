@@ -2,18 +2,18 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Article;
+use App\Entity\Commentaire;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
-class ArticleCrudController extends AbstractCrudController
+class CommentaireCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Article::class;
+        return Commentaire::class;
     }
 
     
@@ -21,10 +21,17 @@ class ArticleCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->onlyOnIndex(),
-            TextField::new('titre'),
-            "resume",
-            "position",
-            AssociationField::new('pages')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+            "contenu",
+            "path",
+            AssociationField::new('user')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+                $associatedEntitys = $entity->getPages();
+                $label = "";
+                foreach ($associatedEntitys as $associatedEntity) {
+                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                }
+                return $label;
+            }),            
+            AssociationField::new('bloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
                 $associatedEntitys = $entity->getPages();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
@@ -32,15 +39,6 @@ class ArticleCrudController extends AbstractCrudController
                 }
                 return $label;
             }),
-            AssociationField::new('blocs')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
-                $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
-                }
-                return $label;
-            })
-
         ];
     }
     
