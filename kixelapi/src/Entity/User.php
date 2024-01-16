@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ApiResource]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -88,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -98,6 +100,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function addRoles(array $rolesToAdd): array
+    {   
+        // Récupérer les rôles actuels de l'utilisateur
+        $currentRoles = $this->getRoles();
+
+        // Fusionner les rôles actuels avec les nouveaux rôles à ajouter
+        $mergedRoles = array_merge($currentRoles, $rolesToAdd);
+
+        // Supprimer les éventuels doublons
+        $uniqueRoles = array_unique($mergedRoles);
+
+        // Mettre à jour les rôles de l'utilisateur
+        $this->setRoles($uniqueRoles);
+
+        // Retourner les rôles mis à jour
+        return $uniqueRoles;
     }
 
     /**
