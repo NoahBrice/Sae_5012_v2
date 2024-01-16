@@ -23,7 +23,7 @@ class Site
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $path = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'id_site')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'site')]
     private Collection $users;
 
     #[ORM\OneToMany(mappedBy: 'site', targetEntity: Page::class)]
