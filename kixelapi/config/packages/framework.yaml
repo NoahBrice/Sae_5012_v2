@@ -1,5 +1,10 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    assets:
+        #base_path: '/'
+        packages: 
+            api_platform:
+                base_path: '/'
 
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true

@@ -1,18 +1,280 @@
+# api/config/packages/api_platform.yaml
 api_platform:
-    title: Hello API Platform
-    version: 1.0.0
+
+    # The title of the API.
+    title: 'API title'
+
+    # The description of the API.
+    description: 'API description'
+
+    # The version of the API.
+    version: '0.0.0'
+
+    # Set this to false if you want Webby to disappear.
+    show_webby: true
+
+    # Specify a name converter to use.
+    name_converter: ~
+
+    # Specify an asset package name to use.
+    asset_package: 'api_platform'
+
+    # Specify a path name generator to use.
+    path_segment_name_generator: 'api_platform.path_segment_name_generator.underscore'
+
+    validator:
+        # Enable the serialization of payload fields when a validation error is thrown.
+        # If you want to serialize only some payload fields, define them like this: [ severity, anotherPayloadField ]
+        serialize_payload_fields: []
+
+        # To enable or disable query parameters validation on collection GET requests
+        query_parameter_validation: true
+
+    eager_loading:
+        # To enable or disable eager loading.
+        enabled: true
+
+        # Fetch only partial data according to serialization groups.
+        # If enabled, Doctrine ORM entities will not work as expected if any of the other fields are used.
+        fetch_partial: false
+
+        # Max number of joined relations before EagerLoading throws a RuntimeException.
+        max_joins: 30
+
+        # Force join on every relation.
+        # If disabled, it will only join relations having the EAGER fetch mode.
+        force_eager: true
+
+    # Enable the Swagger documentation and export.
+    enable_swagger: true
+
+    # Enable Swagger UI.
+    enable_swagger_ui: true
+
+    # Enable ReDoc.
+    enable_re_doc: true
+
+    # Enable the entrypoint.
+    enable_entrypoint: true
+
+    # Enable the docs.
+    enable_docs: true
+
+    # Enable the data collector and the WebProfilerBundle integration.
+    enable_profiler: true
+
+    collection:
+        # The name of the query parameter to filter nullable results (with the ExistsFilter).
+        exists_parameter_name: 'exists'
+
+        # The default order of results.
+        order: 'ASC'
+
+        # The name of the query parameter to order results (with the OrderFilter).
+        order_parameter_name: 'order'
+
+        pagination:
+            # The default name of the parameter handling the page number.
+            page_parameter_name: 'page'
+
+            # The name of the query parameter to enable or disable pagination.
+            enabled_parameter_name: 'pagination'
+
+            # The name of the query parameter to set the number of items per page.
+            items_per_page_parameter_name: 'itemsPerPage'
+
+            # The name of the query parameter to enable or disable the partial pagination.
+            partial_parameter_name: 'partial'
+
+    mapping:
+        # The list of paths with files or directories where the bundle will look for additional resource files.
+        paths: []
+
+    # The list of your resources class directories. Defaults to the directories of the mapping paths but might differ.
+    resource_class_directories:
+        - '%kernel.project_dir%/src/Entity'
+
+    doctrine:
+        # To enable or disable Doctrine ORM support.
+        enabled: true
+
+    doctrine_mongodb_odm:
+        # To enable or disable Doctrine MongoDB ODM support.
+        enabled: false
+
+    oauth:
+        # To enable or disable OAuth.
+        enabled: false
+
+        # The OAuth client ID.
+        clientId: ''
+
+        # The OAuth client secret.
+        clientSecret: ''
+
+        # The OAuth type.
+        type: 'oauth2'
+
+        # The OAuth flow grant type.
+        flow: 'application'
+
+        # The OAuth token URL. Make sure to check the specification tokenUrl is not needed for an implicit flow.
+        tokenUrl: ''
+
+        # The OAuth authentication URL.
+        authorizationUrl: ''
+
+        # The OAuth scopes.
+        scopes: []
+
+    graphql:
+        # Enabled by default with installed webonyx/graphql-php.
+        enabled: false
+
+        # The default IDE (graphiql or graphql-playground) used when going to the GraphQL endpoint. False to disable.
+        default_ide: 'graphiql'
+
+        graphiql:
+            # Enabled by default with installed webonyx/graphql-php and Twig.
+            enabled: false
+
+        graphql_playground:
+            # Enabled by default with installed webonyx/graphql-php and Twig.
+            enabled: false
+
+        introspection:
+            # Enabled by default with installed webonyx/graphql-php.
+            enabled: true
+
+        # The nesting separator used in the filter names.
+        nesting_separator: _
+
+        collection:
+            pagination:
+                enabled: true
+
+    swagger:
+        # The active versions of OpenAPI to be exported or used in the swagger_ui. The first value is the default.
+        versions: [3]
+
+        # The swagger API keys.
+        api_keys: []
+            # The name of the header or query parameter containing the API key.
+            # name: ''
+
+            # Whether the API key should be a query parameter or a header.
+            # type: 'query' or 'header'
+
+        swagger_ui_extra_configuration:
+            # Controls the default expansion setting for the operations and tags. It can be 'list' (expands only the tags), 'full' (expands the tags and operations) or 'none' (expands nothing).
+            docExpansion: list
+            # If set, enables filtering. The top bar will show an edit box that you can use to filter the tagged operations that are shown.
+            filter: false
+            # You can use any other configuration parameters too.
+
+    openapi:
+        # The contact information for the exposed API.
+        contact:
+            # The identifying name of the contact person/organization.
+            name:
+            # The URL pointing to the contact information. MUST be in the format of a URL.
+            url:
+            # The email address of the contact person/organization. MUST be in the format of an email address.
+            email:
+        # A URL to the Terms of Service for the API. MUST be in the format of a URL.
+        termsOfService:
+        # The license information for the exposed API.
+        license:
+            # The license name used for the API.
+            name:
+            # URL to the license used for the API. MUST be in the format of a URL.
+            url:
+
+       #swagger_ui_extra_configuration:
+            # Controls the default expansion setting for the operations and tags. It can be 'list' (expands only the tags), 'full' (expands the tags and operations) or 'none' (expands nothing).
+            #docExpansion: list
+            # If set, enables filtering. The top bar will show an edit box that you can use to filter the tagged operations that are shown.
+            #filter: false
+            # You can use any other configuration parameters too.
+
+    http_cache:
+        # To make all responses public by default.
+        public: ~
+
+        invalidation:
+            # To enable the tags-based cache invalidation system.
+            enabled: false
+
+            # URLs of the Varnish servers to purge using cache tags when a resource is updated.
+            varnish_urls: []
+
+            # To pass options to the client charged with the request.
+            request_options: []
+
+            # Use another service as the purger for example "api_platform.http_cache.purger.varnish.xkey"
+            purger: 'api_platform.http_cache.purger.varnish.ban'
+
+    mercure:
+        # Enabled by default with installed symfony/mercure-bundle.
+        enabled: false
+
+        # The URL sent in the Link HTTP header. If not set, will default to MercureBundle's default hub URL.
+        hub_url: null
+
+    messenger:
+        # Enabled by default with installed symfony/messenger and not installed symfony/symfony.
+        enabled: false
+
+    elasticsearch:
+        # To enable or disable Elasticsearch support.
+        enabled: false
+
+        # The hosts to the Elasticsearch nodes.
+        hosts: []
+
+        # The mapping between resource classes and indexes.
+        mapping: []
+
+    # The list of exceptions mapped to their HTTP status code.
+    exception_to_status:
+        # With a status code.
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400
+
+        # Or with a constant defined in the 'Symfony\Component\HttpFoundation\Response' class.
+        ApiPlatform\Exception\InvalidArgumentException: !php/const Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST
+
+        ApiPlatform\Exception\FilterValidationException: 400
+
+        Doctrine\ORM\OptimisticLockException: 409
+
+        # ...
+
+    # The list of enabled formats. The first one will be the default.
     formats:
-        jsonld: ['application/ld+json']
-    docs_formats:
-        jsonld: ['application/ld+json']
-        jsonopenapi: ['application/vnd.openapi+json']
-        html: ['text/html']
-    defaults:
-        stateless: true
-        cache_headers:
-            vary: ['Content-Type', 'Authorization', 'Origin']
-        extra_properties:
-            standard_put: true
-            rfc_7807_compliant_errors: true
-    event_listeners_backward_compatibility_layer: false
-    keep_legacy_inflector: false
+        jsonld:
+            mime_types: ['application/ld+json']
+
+        json:
+            mime_types: ['application/json']
+
+        html:
+            mime_types: ['text/html']
+
+        # ...
+
+    # The list of enabled patch formats. The first one will be the default.
+    patch_formats: []
+
+    # The list of enabled error formats. The first one will be the default.
+    error_formats:
+        jsonproblem:
+            mime_types: ['application/problem+json']
+
+        jsonld:
+            mime_types: ['application/ld+json']
+
+        # ...
+
+    # Global resources defaults, see in the next section.
+    #defaults:
+        # ...
