@@ -32,6 +32,13 @@ class Commentaire
         return $this->id;
     }
 
+    
+    public function __toString()
+    {
+        return $this->getNom();
+    }
+    
+
     public function getContenu(): ?string
     {
         return $this->contenu;

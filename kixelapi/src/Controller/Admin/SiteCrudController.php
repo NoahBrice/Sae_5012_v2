@@ -6,6 +6,7 @@ use App\Entity\Site;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class SiteCrudController extends AbstractCrudController
@@ -23,15 +24,16 @@ class SiteCrudController extends AbstractCrudController
             "nom",
             "path",
             AssociationField::new('users')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getSite();
+                $associatedEntitys = $entity->getUsers();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
                 }
                 return $label;
             }),
+            
             AssociationField::new('pages')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getSite();
+                $associatedEntitys = $entity->getPages();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
@@ -39,7 +41,7 @@ class SiteCrudController extends AbstractCrudController
                 return $label;
             }),
             AssociationField::new('dataSets')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getSite();
+                $associatedEntitys = $entity->getDataSets();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
@@ -47,7 +49,7 @@ class SiteCrudController extends AbstractCrudController
                 return $label;
             }),
             AssociationField::new('themes')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getSite();
+                $associatedEntitys = $entity->getThemes();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";

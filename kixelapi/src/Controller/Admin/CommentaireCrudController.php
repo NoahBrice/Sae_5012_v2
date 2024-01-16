@@ -24,7 +24,7 @@ class CommentaireCrudController extends AbstractCrudController
             "contenu",
             "path",
             AssociationField::new('user')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getPages();
+                $associatedEntitys = $entity->getUser();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
@@ -32,7 +32,7 @@ class CommentaireCrudController extends AbstractCrudController
                 return $label;
             }),            
             AssociationField::new('bloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getPages();
+                $associatedEntitys = $entity->getBloc();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";

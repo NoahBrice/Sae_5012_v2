@@ -47,7 +47,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         //////////////////////////
-        // Article
+        // Bloc
         //////////////////////////
         $bloc = new Bloc;
         $bloc->setTitre("Bloc de test"); // 
