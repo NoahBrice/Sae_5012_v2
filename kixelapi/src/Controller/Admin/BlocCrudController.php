@@ -21,7 +21,14 @@ class BlocCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->onlyOnIndex(),
-            "typeBloc",
+            AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+                $associatedEntitys = $entity->getBlocs();
+                $label = "";
+                foreach ($associatedEntitys as $associatedEntity) {
+                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                }
+                return $label;
+            }),
             "titre",
             "contenu",
             "notable",
