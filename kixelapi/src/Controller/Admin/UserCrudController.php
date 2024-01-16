@@ -31,7 +31,7 @@ class UserCrudController extends AbstractCrudController
             "password",
             ArrayField::new('roles'),
             AssociationField::new('site')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getPage();
+                $associatedEntitys = $entity->getSite();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";

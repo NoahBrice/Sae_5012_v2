@@ -21,6 +21,18 @@ class SiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Site::class);
     }
 
+    public function findByName($nom): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.nom = :val')
+            ->setParameter('val', $nom)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Site[] Returns an array of Site objects
 //     */
