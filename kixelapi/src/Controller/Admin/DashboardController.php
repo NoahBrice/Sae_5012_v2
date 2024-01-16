@@ -17,6 +17,8 @@ use App\Entity\DataSet;
 use App\Entity\Page;
 use App\Entity\Reaction;
 use App\Entity\Site;
+use App\Entity\Theme;
+use App\Entity\TypeBloc;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -62,6 +64,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Pages', 'fas fa-list', Page::class);
         yield MenuItem::linkToCrud('Réactions', 'fas fa-list', Reaction::class);
         yield MenuItem::linkToCrud('Sites', 'fas fa-list', Site::class);
+        yield MenuItem::linkToCrud('Themes', 'fas fa-list', Theme::class);
+        yield MenuItem::linkToCrud('Types de blocs', 'fas fa-list', TypeBloc::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }
