@@ -27,7 +27,7 @@ class TypeBlocCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getBlocs();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    $label = $label . $associatedEntity->getContenu() . "(" . $associatedEntity->getId() . ")" . ", ";
                 }
                 return $label;
             }),

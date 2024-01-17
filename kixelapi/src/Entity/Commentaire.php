@@ -35,7 +35,7 @@ class Commentaire
     
     public function __toString()
     {
-        return $this->getNom();
+        return $this->getContenu();
     }
     
 

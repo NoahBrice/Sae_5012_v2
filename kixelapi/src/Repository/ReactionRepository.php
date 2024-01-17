@@ -21,6 +21,18 @@ class ReactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Reaction::class);
     }
 
+    public function findByName($note): array
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.note = :val')
+            ->setParameter('val', $note)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Reaction[] Returns an array of Reaction objects
 //     */

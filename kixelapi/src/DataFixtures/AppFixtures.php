@@ -4,8 +4,8 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\User;
 use App\Entity\Site;
+use App\Entity\User;
 use App\Entity\Bloc;
 use App\Entity\Article;
 use App\Entity\DataSet;
@@ -15,10 +15,19 @@ use App\Entity\Reaction;
 use App\Entity\Theme;
 use App\Entity\TypeBloc;
 use App\Repository\SiteRepository;
+use App\Repository\UserRepository;
+use App\Repository\BlocRepository;
+use App\Repository\ArticleRepository;
+use App\Repository\DataSetRepository;
+use App\Repository\CommentaireRepository;
+use App\Repository\PageRepository;
+use App\Repository\ReactionRepository;
+use App\Repository\ThemeRepository;
+use App\Repository\TypeBlocRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class AppFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $hasher, private SiteRepository $repo){
+    public function __construct(private UserPasswordHasherInterface $hasher, private SiteRepository $siteRepo, private UserRepository $userRepo,private BlocRepository $blocRepo,private ArticleRepository $articleRepo,private DataSetRepository $dataSetRepo,private CommentaireRepository $commentaireRepo,private PageRepository $pageRepo,private ReactionRepository $reactionRepo,private ThemeRepository $themeRepo,private TypeBlocRepository $typeBlocRepo){
         
     }
     public function load(ObjectManager $manager): void
@@ -48,8 +57,7 @@ class AppFixtures extends Fixture
         $article->setResume("Ceci est un article de test"); // 
         $article->setPosition(1);
         
-        // $article->addPages($this->repo->findByName("pages")[0]);
-        // $article->addBlocs($this->repo->findByName("blocs")[0]);
+
         
         $manager->persist($article);
         $manager->flush();
@@ -63,10 +71,7 @@ class AppFixtures extends Fixture
         $bloc->setContenu("Ceci est un Bloc de test"); // 
         $bloc->setNotable(1); // 
         
-        // $bloc->addArticle($this->repo->findByName("TypeBloc")[0]);
-        // $bloc->addCommentaire($this->repo->findByName("Article")[0]);
-        // $bloc->addReaction($this->repo->findByName("Comentaires")[0]);
-        // $bloc->addTypeBloc($this->repo->findByName("Reactions")[0]);
+
 
         $manager->persist($bloc);
         $manager->flush();
@@ -79,7 +84,6 @@ class AppFixtures extends Fixture
         $typeBloc->setNom("typeBloc de test"); // 
         $typeBloc->setInfoBlocPath("/"); // 
         
-        // $typeBloc->addBlocs($this->repo->findByName("TypeTypeBloc")[0]);
 
         $manager->persist($typeBloc);
         $manager->flush();
@@ -92,7 +96,6 @@ class AppFixtures extends Fixture
         $theme->setNom("theme de test"); // 
         $theme->setPath("/"); // 
         
-        // $theme->addSites($this->repo->findByName("Site")[0]);
         
         $manager->persist($theme);
         $manager->flush();
@@ -103,8 +106,7 @@ class AppFixtures extends Fixture
         $reaction = new Reaction;
         $reaction->setNote(1); // 
         
-        // $reaction->addUser($this->repo->findByName("Site")[0]);
-        // $reaction->addBloc($this->repo->findByName("Site")[0]);
+
         
         $manager->persist($reaction);
         $manager->flush();
@@ -115,9 +117,7 @@ class AppFixtures extends Fixture
         $page = new Page;
         $page->setNom("test"); // 
         
-        // $page->addBloc($this->repo->findByName("Site")[0]);
-        // $page->addArticle($this->repo->findByName("Site")[0]);
-        // $page->addSite($this->repo->findByName("Site")[0]);
+
         
         $manager->persist($page);
         $manager->flush();
@@ -128,9 +128,7 @@ class AppFixtures extends Fixture
         $dataSet = new DataSet;
         $dataSet->setNom("test"); // 
         
-        // $dataSet->addBloc($this->repo->findByName("Site")[0]);
-        // $dataSet->addArticle($this->repo->findByName("Site")[0]);
-        // $dataSet->addSite($this->repo->findByName("Site")[0]);
+
         
         $manager->persist($dataSet);
         $manager->flush();
@@ -142,8 +140,6 @@ class AppFixtures extends Fixture
         $commentaire->setContenu("test"); // 
         $commentaire->setPath("/"); // 
         
-        // $commentaire->addUser($this->repo->findByName("Site")[0]);
-        // $commentaire->addBloc($this->repo->findByName("Site")[0]);
         
         $manager->persist($commentaire);
         $manager->flush();
@@ -158,11 +154,99 @@ class AppFixtures extends Fixture
         $admin->setRoles(["ROLE_ADMIN", "ROLE_USER"]);
         $admin->setNom("admin");
         $admin->setPrenom("admin");
-        $admin->addSite($this->repo->findByName("test")[0]);
+
 
 
         $manager->persist($admin);
         $manager->flush();
+
+        //////////////////////////
+        // Relation
+        //////////////////////////
+
+                    //////////////////////////
+                    // Relation Commentaire
+                    //////////////////////////
+
+                    // Reçois de relation uniquement
+                    
+                    //////////////////////////
+                    // Relation User
+                    //////////////////////////
+
+                    $admin->addSite($this->siteRepo->findByName("test")[0]);
+                    $manager->persist($admin);
+
+                    //////////////////////////
+                    // Relation Article
+                    //////////////////////////
+
+                    // Reçois de relation uniquement
+                    
+                    //////////////////////////
+                    // Relation Bloc
+                    //////////////////////////
+
+                    $bloc->addArticle($this->articleRepo->findByName("Article Test")[0]);
+                    $bloc->addCommentaire($this->commentaireRepo->findByName("test")[0]);
+                    $bloc->addReaction($this->reactionRepo->findByName(1)[0]);
+                    $bloc->addTypeBloc($this->typeBlocRepo->findByName("typeBloc de test")[0]);
+                    $manager->persist($bloc);
+
+
+                    //////////////////////////
+                    // Relation DataSet
+                    //////////////////////////
+
+                    // Reçois de relation uniquement
+
+                    //////////////////////////
+                    // Relation Page
+                    //////////////////////////
+                    $page->addBloc($this->blocRepo->findByName("Bloc de test")[0]);
+                    // $page->addArticle($this->articleRepo->findByName("Article de test")[0]); no indice 0
+                    // $page->addSite($this->siteRepo->findByName("test")[0]);
+                    $manager->persist($page);
+
+
+                    //////////////////////////
+                    // Relation Réaction
+                    //////////////////////////
+
+                    // Reçois de relation uniquement                 
+
+                    //////////////////////////
+                    // Relation Site
+                    //////////////////////////
+
+                    $site->addPage($this->pageRepo->findByName("test")[0]);
+                    // $site->addUser($this->userRepo->findByName("admin@a.com")[0]); bizzarre
+                    $site->getDataSets($this->dataSetRepo->findByName("test")[0]);
+                    $site->getThemes($this->themeRepo->findByName("theme de test")[0]);
+                    $manager->persist($site);
+
+
+
+                    //////////////////////////
+                    // Relation Theme
+                    //////////////////////////
+
+                    // Reçois de relation uniquement
+
+                    //////////////////////////
+                    // Relation Type de bloc
+                    //////////////////////////
+
+                    $typeBloc->addBloc($this->blocRepo->findByName("Bloc de test")[0]);
+                    $manager->persist($typeBloc);
+
+
+
+        $manager->flush();
+
+
+
+
 
     }
 }

@@ -21,6 +21,18 @@ class DataSetRepository extends ServiceEntityRepository
         parent::__construct($registry, DataSet::class);
     }
 
+    public function findByName($nom): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.nom = :val')
+            ->setParameter('val', $nom)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return DataSet[] Returns an array of DataSet objects
 //     */

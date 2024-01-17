@@ -21,6 +21,18 @@ class TypeBlocRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeBloc::class);
     }
 
+    public function findByName($email): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.email = :val')
+            ->setParameter('val', $email)
+            ->orderBy('t.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return TypeBloc[] Returns an array of TypeBloc objects
 //     */

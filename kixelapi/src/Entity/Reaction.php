@@ -27,7 +27,7 @@ class Reaction
     
     public function __toString()
     {
-        return $this->getNom();
+        return $this->getNote();
     }
     
     public function getId(): ?int

@@ -43,7 +43,7 @@ class BlocCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getArticle();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    $label = $label . $associatedEntity->getTitre() . "(" . $associatedEntity->getId() . ")" . ", ";
                 }
                 return $label;
             }),
@@ -51,7 +51,7 @@ class BlocCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getCommentaires();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    $label = $label . $associatedEntity->getContenu() . "(" . $associatedEntity->getId() . ")" . ", ";
                 }
                 return $label;
             }), 
@@ -59,7 +59,16 @@ class BlocCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getReactions();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    $label = $label . $associatedEntity->getNote() . "(" . $associatedEntity->getId() . ")" . ", ";
+                }
+                return $label;
+            }),
+
+            AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+                $associatedEntitys = $entity->getReactions();
+                $label = "";
+                foreach ($associatedEntitys as $associatedEntity) {
+                    $label = $label . $associatedEntity->getNote() . "(" . $associatedEntity->getId() . ")" . ", ";
                 }
                 return $label;
             })

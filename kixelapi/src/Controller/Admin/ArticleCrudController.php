@@ -36,7 +36,7 @@ class ArticleCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getBlocs();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    $label = $label . $associatedEntity->getContenu() . "(" . $associatedEntity->getId() . ")" . ", "; // a modifier donner un résumé ou un nom
                 }
                 return $label;
             })

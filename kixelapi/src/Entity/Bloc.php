@@ -52,7 +52,7 @@ class Bloc
     
     public function __toString()
     {
-        return $this->getNom();
+        return $this->getTitre();
     }
     
     public function getId(): ?int

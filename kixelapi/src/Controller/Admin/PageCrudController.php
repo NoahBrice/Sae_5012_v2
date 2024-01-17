@@ -27,7 +27,7 @@ class PageCrudController extends AbstractCrudController
                 $label = "";
                 if($associatedEntitys != null){
                     foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                        $label = $label . $associatedEntity->getContenu() . "(" . $associatedEntity->getId() . ")" . ", ";
                     }
                 }
                 else{
@@ -40,7 +40,7 @@ class PageCrudController extends AbstractCrudController
                 $label = "";
                 if($associatedEntitys != null){
                     foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                        $label = $label . $associatedEntity->getTitre() . "(" . $associatedEntity->getId() . ")" . ", ";
                     }
                 }
                 else{
