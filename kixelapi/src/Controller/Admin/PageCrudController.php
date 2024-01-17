@@ -23,27 +23,42 @@ class PageCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             "nom",
             AssociationField::new('bloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
+                $associatedEntitys = $entity->getBloc();
                 $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                if($associatedEntitys != null){
+                    foreach ($associatedEntitys as $associatedEntity) {
+                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    }
+                }
+                else{
+                    return "empty";
                 }
                 return $label;
             }),
             AssociationField::new('article')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
+                $associatedEntitys = $entity->getArticle();
                 $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                if($associatedEntitys != null){
+                    foreach ($associatedEntitys as $associatedEntity) {
+                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    }
+                }
+                else{
+                    return "empty";
                 }
                 return $label;
             }),
             AssociationField::new('site')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
+                $associatedEntitys = $entity->getSite();
                 $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                if($associatedEntitys != null){
+                    foreach ($associatedEntitys as $associatedEntity) {
+                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    }
                 }
+                else{
+                    return "empty";
+                }   
                 return $label;
             })
         ];
