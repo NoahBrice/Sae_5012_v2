@@ -175,6 +175,8 @@ class AppFixtures extends Fixture
                     //////////////////////////
 
                     $admin->addSite($this->siteRepo->findByName("test")[0]);
+                    $admin->addCommentaire($this->siteRepo->findByName("test")[0]);
+                    $admin->addCommentaire($this->siteRepo->findByName(1)[0]);
                     $manager->persist($admin);
 
                     //////////////////////////
@@ -190,7 +192,6 @@ class AppFixtures extends Fixture
                     $bloc->addArticle($this->articleRepo->findByName("Article Test")[0]);
                     $bloc->addCommentaire($this->commentaireRepo->findByName("test")[0]);
                     $bloc->addReaction($this->reactionRepo->findByName(1)[0]);
-                    $bloc->addTypeBloc($this->typeBlocRepo->findByName("typeBloc de test")[0]);
                     $manager->persist($bloc);
 
 
@@ -204,7 +205,7 @@ class AppFixtures extends Fixture
                     // Relation Page
                     //////////////////////////
                     $page->addBloc($this->blocRepo->findByName("Bloc de test")[0]);
-                    // $page->addArticle($this->articleRepo->findByName("Article de test")[0]); no indice 0
+                    $page->addArticle($this->articleRepo->findByName("Article de test")[0]); // no indice 0
                     // $page->addSite($this->siteRepo->findByName("test")[0]);
                     $manager->persist($page);
 

@@ -29,12 +29,13 @@ class BlocCrudController extends AbstractCrudController
                     foreach ($associatedEntitys as $associatedEntity) {
                         $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
                     }
+                    
                 }
                 else{
                     return "empty";
                 }
-
                 return $label;
+
             }),
             "titre",
             "contenu",
@@ -56,15 +57,6 @@ class BlocCrudController extends AbstractCrudController
                 return $label;
             }), 
            AssociationField::new('reactions')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getReactions();
-                $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNote() . "(" . $associatedEntity->getId() . ")" . ", ";
-                }
-                return $label;
-            }),
-
-            AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
                 $associatedEntitys = $entity->getReactions();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
