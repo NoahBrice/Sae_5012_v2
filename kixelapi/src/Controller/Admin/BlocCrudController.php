@@ -22,18 +22,25 @@ class BlocCrudController extends AbstractCrudController
         return [
             IdField::new('id')->onlyOnIndex(),
             AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
+                $associatedEntitys = $entity->getTypeBloc();
                 $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                // dd($entity);
+                if($associatedEntitys != null){
+                    foreach ($associatedEntitys as $associatedEntity) {
+                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    }
                 }
+                else{
+                    return "empty";
+                }
+
                 return $label;
             }),
             "titre",
             "contenu",
             "notable",
             AssociationField::new('article')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
+                $associatedEntitys = $entity->getArticle();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
@@ -41,7 +48,7 @@ class BlocCrudController extends AbstractCrudController
                 return $label;
             }),
             AssociationField::new('commentaires')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
+                $associatedEntitys = $entity->getCommentaires();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
@@ -49,7 +56,7 @@ class BlocCrudController extends AbstractCrudController
                 return $label;
             }), 
            AssociationField::new('reactions')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getBlocs();
+                $associatedEntitys = $entity->getReactions();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";

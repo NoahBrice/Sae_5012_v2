@@ -26,16 +26,26 @@ class CommentaireCrudController extends AbstractCrudController
             AssociationField::new('user')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
                 $associatedEntitys = $entity->getUser();
                 $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                if($associatedEntitys != null){
+                    foreach ($associatedEntitys as $associatedEntity) {
+                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    }
+                }
+                else{
+                    return "empty";
                 }
                 return $label;
             }),            
             AssociationField::new('bloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
                 $associatedEntitys = $entity->getBloc();
                 $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                if($associatedEntitys != null){
+                    foreach ($associatedEntitys as $associatedEntity) {
+                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    }
+                }
+                else{
+                    return "empty";
                 }
                 return $label;
             }),

@@ -24,7 +24,7 @@ class TypeBlocCrudController extends AbstractCrudController
             "nom",
             "info_bloc_path",
             AssociationField::new('blocs')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getSite();
+                $associatedEntitys = $entity->getBlocs();
                 $label = "";
                 foreach ($associatedEntitys as $associatedEntity) {
                     $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";

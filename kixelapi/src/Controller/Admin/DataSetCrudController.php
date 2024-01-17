@@ -24,10 +24,15 @@ class DataSetCrudController extends AbstractCrudController
             "nom",
             "json_path",
             AssociationField::new('site')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getPages();
+                $associatedEntitys = $entity->getSite();
                 $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                if($associatedEntitys != null){
+                    foreach ($associatedEntitys as $associatedEntity) {
+                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    }
+                }
+                else{
+                    return "empty";
                 }
                 return $label;
             }),
