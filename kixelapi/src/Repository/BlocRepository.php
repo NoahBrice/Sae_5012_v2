@@ -21,16 +21,15 @@ class BlocRepository extends ServiceEntityRepository
         parent::__construct($registry, Bloc::class);
     }
 
-    public function findByName($titre): array
+    public function findByName($titre): ?Bloc
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.titre = :val')
-            ->setParameter('val', $titre)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.titre = :val')
+        ->setParameter('val', $titre)
+        ->orderBy('s.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
 
 //    /**

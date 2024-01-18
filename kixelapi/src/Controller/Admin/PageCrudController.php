@@ -38,6 +38,7 @@ class PageCrudController extends AbstractCrudController
             AssociationField::new('article')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
                 $associatedEntitys = $entity->getArticle();
                 $label = "";
+                // dd($associatedEntitys);
                 if($associatedEntitys != null){
                     foreach ($associatedEntitys as $associatedEntity) {
                         $label = $label . $associatedEntity->getTitre() . "(" . $associatedEntity->getId() . ")" . ", ";
@@ -52,8 +53,12 @@ class PageCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getSite();
                 $label = "";
                 if($associatedEntitys != null){
-                    foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    if ($associatedEntitys instanceof Collection) {
+                        foreach ($associatedEntitys as $associatedEntity) {
+                            $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                        }
+                    } else {
+                        $label = $label . $associatedEntitys->getNom() . "(" . $associatedEntitys->getId() . ")" . ", ";
                     }
                 }
                 else{

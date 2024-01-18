@@ -27,8 +27,12 @@ class DataSetCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getSite();
                 $label = "";
                 if($associatedEntitys != null){
-                    foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    if ($associatedEntitys instanceof Collection) {
+                        foreach ($associatedEntitys as $associatedEntity) {
+                            $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                        }
+                    } else {
+                        $label = $label . $associatedEntitys->getNom() . "(" . $associatedEntitys->getId() . ")" . ", ";
                     }
                 }
                 else{

@@ -21,16 +21,15 @@ class ThemeRepository extends ServiceEntityRepository
         parent::__construct($registry, Theme::class);
     }
 
-    public function findByName($nom): array
+    public function findByName($nom): ?Theme
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.nom = :val')
-            ->setParameter('val', $nom)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.nom = :val')
+        ->setParameter('val', $nom)
+        ->orderBy('s.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
 
 //    /**

@@ -21,16 +21,15 @@ class CommentaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Commentaire::class);
     }
 
-    public function findByName($contenu): array
+    public function findByName($contenu): ?Commentaire
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.contenu = :val')
-            ->setParameter('val', $contenu)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.contenu = :val')
+        ->setParameter('val', $contenu)
+        ->orderBy('s.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
 
 //    /**

@@ -26,8 +26,12 @@ class ReactionCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getUser();
                 $label = "";
                 if($associatedEntitys != null){
-                    foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    if ($associatedEntitys instanceof Collection) {
+                        foreach ($associatedEntitys as $associatedEntity) {
+                            $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                        }
+                    } else {
+                        $label = $label . $associatedEntitys->getNom() . "(" . $associatedEntitys->getId() . ")" . ", ";
                     }
                 }
                 else{
@@ -39,8 +43,12 @@ class ReactionCrudController extends AbstractCrudController
                 $associatedEntitys = $entity->getBloc();
                 $label = "";
                 if($associatedEntitys != null){
-                    foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    if ($associatedEntitys instanceof Collection) {
+                        foreach ($associatedEntitys as $associatedEntity) {
+                            $label = $label . $associatedEntity->getContenu() . "(" . $associatedEntity->getId() . ")" . ", ";
+                        }
+                    } else {
+                        $label = $label . $associatedEntitys->getContenu() . "(" . $associatedEntitys->getId() . ")" . ", ";
                     }
                 }
                 else{

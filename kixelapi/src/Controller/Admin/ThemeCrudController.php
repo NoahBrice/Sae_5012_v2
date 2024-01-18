@@ -26,9 +26,14 @@ class ThemeCrudController extends AbstractCrudController
             AssociationField::new('site')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
                 $associatedEntitys = $entity->getSite();
                 $label = "";
+                // dd($associatedEntitys);
                 if($associatedEntitys != null){
-                    foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                    if ($associatedEntitys instanceof Collection) {
+                        foreach ($associatedEntitys as $associatedEntity) {
+                            $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+                        }
+                    } else {
+                        $label = $label . $associatedEntitys->getNom() . "(" . $associatedEntitys->getId() . ")" . ", ";
                     }
                 }
                 else{

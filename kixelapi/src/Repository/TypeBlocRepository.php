@@ -21,16 +21,15 @@ class TypeBlocRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeBloc::class);
     }
 
-    public function findByName($email): array
+    public function findByName($nom): ?TypeBloc
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.email = :val')
-            ->setParameter('val', $email)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.nom = :val')
+        ->setParameter('val', $nom)
+        ->orderBy('s.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
 
 //    /**

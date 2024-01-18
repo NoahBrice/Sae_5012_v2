@@ -21,16 +21,15 @@ class PageRepository extends ServiceEntityRepository
         parent::__construct($registry, Page::class);
     }
 
-    public function findByName($nom): array
+    public function findByName($nom): ?Page
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.nom = :val')
-            ->setParameter('val', $nom)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.nom = :val')
+        ->setParameter('val', $nom)
+        ->orderBy('s.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
 
 //    /**

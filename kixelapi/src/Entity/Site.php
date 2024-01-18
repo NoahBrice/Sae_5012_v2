@@ -89,7 +89,7 @@ class Site
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->addIdSite($this);
+            $user->addSite($this);
         }
 
         return $this;

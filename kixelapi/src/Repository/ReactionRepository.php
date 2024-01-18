@@ -21,16 +21,15 @@ class ReactionRepository extends ServiceEntityRepository
         parent::__construct($registry, Reaction::class);
     }
 
-    public function findByName($note): array
+    public function findByName($note): ?Reaction
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.note = :val')
-            ->setParameter('val', $note)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.note = :val')
+        ->setParameter('val', $note)
+        ->orderBy('s.id', 'ASC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
 
 //    /**
