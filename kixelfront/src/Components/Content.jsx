@@ -1,5 +1,6 @@
 // Content.js
 import React from "react";
+import Themes from '../ComponentsMenu/Themes.jsx';
 
 const Content = ({ selectedMenu }) => {
   switch (selectedMenu) {

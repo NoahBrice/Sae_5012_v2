@@ -2,7 +2,7 @@ import "../styles/stylesMenu.css";
 import React, { useState } from "react";
 import Content from "./Content";
 
-import Themes from '../ComponentsMenu/Themes.jsx';
+
 
 export default function Menu() {
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -46,7 +46,7 @@ export default function Menu() {
             <a href="#"> Commentaires </a>
           </li>
           <li>
-            <a href="#" onClick={() => handleMenuClick("Themes")}> Thèmes </a>
+            <a href="#" onClick={() => handleMenuClick("Thèmes")}> Thèmes </a>
           </li>
           <li>
             <a href="#"> Data Sets </a>
