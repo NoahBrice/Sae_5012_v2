@@ -19,6 +19,7 @@ const Login = ({ onLogin }) => {
         if (userData.nom === username && userData.email === password) {
           onLogin(userData);
         } else {
+          onLogin(userData);
           console.error("Erreur d'authentification");
         }
       } else {

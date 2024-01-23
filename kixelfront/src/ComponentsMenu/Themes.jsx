@@ -10,7 +10,7 @@ const Themes = () => {
     // Fetch themes API
     fetch('http://localhost:8000/api/themes')
       .then((response) => response.json())
-      .then((data) => setThemes(data))
+      .then((data) => setThemes(data["hydra:member"]))
       .catch((error) => console.error('Error fetching themes:', error));
   }, []); 
 
