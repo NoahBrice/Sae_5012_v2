@@ -156,9 +156,13 @@ api_platform:
     swagger:
         # The active versions of OpenAPI to be exported or used in the swagger_ui. The first value is the default.
         versions: [3]
+  
 
         # The swagger API keys.
-        api_keys: []
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
             # The name of the header or query parameter containing the API key.
             # name: ''
 
