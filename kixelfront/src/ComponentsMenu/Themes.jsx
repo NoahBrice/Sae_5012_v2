@@ -11,6 +11,10 @@ const Themes = () => {
     fetch('http://localhost:8000/api/themes')
       .then((response) => response.json())
       .then((data) => setThemes(data["hydra:member"]))
+<<<<<<< HEAD
+=======
+      // console.log(response)
+>>>>>>> 9aaf47f5d37db067f456b40836d14b057cd35da6
       .catch((error) => console.error('Error fetching themes:', error));
   }, []); 
 
@@ -23,12 +27,12 @@ const Themes = () => {
     <div className="themes-container">
       <h1>Themes</h1>
       <p>Select a filter:</p>
-      <select value={selectedFilter} onChange={handleFilterChange}>
+
+      <div className="filter-element">      <select value={selectedFilter} onChange={handleFilterChange}>
         <option value="chronologic">Chronologic</option>
         {/* options */}
-      </select>
-      <div className="filter-element"></div>
-
+      </select></div>
+    
       <div className="themes-list">
         {themes.map((theme) => (
           <div key={theme.id} className="theme-item">

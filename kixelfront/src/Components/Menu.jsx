@@ -2,6 +2,10 @@ import "../styles/stylesMenu.css";
 import React, { useState } from "react";
 import Content from "./Content";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9aaf47f5d37db067f456b40836d14b057cd35da6
 
 export default function Menu() {
   const [selectedMenu, setSelectedMenu] = useState(null);
