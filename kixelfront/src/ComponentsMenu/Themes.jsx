@@ -1,0 +1,47 @@
+// Themes.js
+import React, { useState, useEffect } from 'react';
+import './ComponentsStyles/Themes.css'; 
+
+const Themes = () => {
+  const [themes, setThemes] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('chronologic'); 
+
+  useEffect(() => {
+    // Fetch themes API
+    fetch('http://localhost:8000/api/themes')
+      .then((response) => response.json())
+      .then((data) => setThemes(data))
+      .catch((error) => console.error('Error fetching themes:', error));
+  }, []); 
+
+  // changement filtre test
+  const handleFilterChange = (event) => {
+    setSelectedFilter(event.target.value);
+  };
+
+  return (
+    <div className="themes-container">
+      <h1>Themes</h1>
+      <p>Select a filter:</p>
+      <select value={selectedFilter} onChange={handleFilterChange}>
+        <option value="chronologic">Chronologic</option>
+        {/* options */}
+      </select>
+      <div className="filter-element"></div>
+
+      <div className="themes-list">
+        {themes.map((theme) => (
+          <div key={theme.id} className="theme-item">
+            <img src="#" alt="img" />
+            <div>
+              <h2>{theme.nom}</h2>
+              <p>{theme.site}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Themes;

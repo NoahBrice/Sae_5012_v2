@@ -1,0 +1,80 @@
+/* styles menu */
+.close-sidebar {
+  color: #2d4ca8;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  background-color: #374775;
+  color: #e0e6f6;
+}
+
+ul {
+  background-color: #2d4ca8;
+}
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  transition: width 1s ease;
+}
+
+.sidebar-list li {
+  /* padding: 10px; */
+  text-align: left;
+}
+
+.sidebar-list li a {
+  padding: 10px;
+  text-decoration: none;
+  color: #e0e6f6;
+  display: block;
+}
+
+/* clic et focus */
+.sidebar-list li a:hover,
+.sidebar-list li a:focus {
+  background-color: #e0e6f6;
+  color: #2c3242;
+  text-decoration: underline;
+  transition: background-color 1s ease, color 0.3s ease;
+}
+
+.sidebar-list li:hover,
+.sidebar-list li:focus {
+  background-color: #e0e6f6;
+}
+
+.sidebar-list {
+  /* Existing styles for the sidebar */
+  transition: width 0.3s ease; /* Add smooth transition for the width change */
+
+  &.open {
+    /* Styles for open state */
+    /* Adjust the width or any other styles as needed */
+    width: 250px;
+  }
+
+  &.closed {
+    /* Styles for closed state */
+    /* Adjust the width or any other styles as needed */
+    width: 0;
+    overflow: hidden;
+  }
+
+  /* Add other styles as needed */
+}
+
+.toggle-button {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #2d4ca8;
+  text-align: right;
+  color: #e0e6f6;
+  transition: transform 1s ease;
+}
+.close-sidebar {
+  /* Existing styles for the close button */
+  cursor: pointer;
+}
+
+/* Add other styles as needed */

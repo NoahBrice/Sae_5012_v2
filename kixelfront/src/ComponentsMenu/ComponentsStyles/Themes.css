@@ -1,0 +1,40 @@
+/* Themes.css */
+.themes-container {
+    padding: 20px;
+}
+
+.filter-element {
+    width: 100%;
+    height: 30px;
+    border-left: 5px solid #2c3242;
+    border-right: 5px solid #2c3242;
+    background-color: #e0e6f6;
+    /* Add other styles for the filter element */
+}
+
+.themes-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.theme-item {
+    border: 1px solid #2c3242;
+    border-radius: 10px;
+    padding: 10px;
+    width: 300px;
+}
+
+.theme-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.theme-item h2 {
+    margin-bottom: 10px;
+}
+
+.theme-item p {
+    color: #555;
+}
