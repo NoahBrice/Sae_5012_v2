@@ -30,16 +30,16 @@ export default function Menu() {
             </a>
           </li>
           <li>
-            <a href="#"> Accueil </a>
+            <a href="#" onClick={() => handleMenuClick("Accueil")}> Accueil </a>
           </li>
           <li>
-            <a href="#"> Sites </a>
+            <a href="#" onClick={() => handleMenuClick("Sites")}> Sites </a>
           </li>
           <li>
-            <a href="#"> Pages </a>
+            <a href="#" onClick={() => handleMenuClick("Pages")}> Pages </a>
           </li>
           <li>
-            <a href="#"> Articles </a>
+            <a href="#" onClick={() => handleMenuClick("Articles")}> Articles </a>
           </li>
           <li>
             <a href="#"> Commentaires </a>
