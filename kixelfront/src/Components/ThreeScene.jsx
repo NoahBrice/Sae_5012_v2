@@ -99,31 +99,6 @@ const ThreeScene = () => {
       });
     });
 
-    // Fonction pour générer deux arbres avec feuillage
-    function generateTrees() {
-      for (let i = 0; i < 5; i++) {
-        const treeGeometry = new THREE.CylinderGeometry(1, 1, 10, 8);
-        const treeMaterial = new THREE.MeshBasicMaterial({ color: 0x8B4513 }); // marron
-        const tree = new THREE.Mesh(treeGeometry, treeMaterial);
-
-        // feuillage aux arbres
-        const leavesGeometry = new THREE.SphereGeometry(3, 8, 4);
-        const leavesMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
-        leaves.position.y = 5; //  feuilles au-dessus du tronc
-        tree.add(leaves);
-
-        //  aléatoire sur le sol
-        tree.position.x = Math.random() * 80 - 40;
-        tree.position.z = Math.random() * 80 - 80;
-
-        //  la taille des arbres
-        tree.scale.set(4, 4, 4);
-
-        scene.add(tree);
-      }
-    }
-
     //  trois boîtes avec des faces arrondies
     class TextBox {
       constructor() {
@@ -190,8 +165,7 @@ const ThreeScene = () => {
 
     // TorusKnots (j'adore ce mot)
     generateTorusKnots();
-    // aaarabres et les boîtes
-    generateTrees();
+    // les boîtes
     generateBoxes();
 
     // caméra

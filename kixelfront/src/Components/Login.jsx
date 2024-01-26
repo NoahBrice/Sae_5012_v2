@@ -10,23 +10,37 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8000/api/users/1"); // test
+      const response = await fetch("http://localhost:8000/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: username,
+          password: password,
+        }),
+      });
 
       if (response.ok) {
-        const userData = await response.json();
+        const data = await response.json();
+        const { token } = data;
 
-        // on test
-        if (userData.nom === username && userData.email === password) {
-          onLogin(userData);
-        } else {
-          onLogin(userData);
-          console.error("Erreur d'authentification");
-        }
+        // pas giga safe mais vasi pour test
+        localStorage.setItem("token", token);
+
+        // Now, you can use the token for future authenticated requests
+        // Example: fetch("http://localhost:8000/some-protected-endpoint", {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+        // });
+
+        onLogin(); // You might want to pass user information to onLogin if needed
       } else {
-        console.error("Impossible de recevoir les donnees");
+        console.error("Authentication failed");
       }
     } catch (error) {
-      console.error("Erreur durant authentification:", error);
+      console.error("Error during authentication:", error);
     }
   };
 
@@ -71,7 +85,7 @@ const Login = ({ onLogin }) => {
           </button>
         </div>
       </div>
-      <ThreeScene />
+      {/* <ThreeScene /> */}
     </div>
   );
 };

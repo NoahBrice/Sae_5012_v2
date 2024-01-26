@@ -7,12 +7,24 @@ const Themes = () => {
   const [selectedFilter, setSelectedFilter] = useState('chronologic'); 
 
   useEffect(() => {
-    // Fetch themes API
-    fetch('http://localhost:8000/api/themes')
+    // Fetch themes API with authentication token
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      // Handle case where token is not available (user is not authenticated)
+      console.error('Token not available. User not authenticated.');
+      return;
+    }
+
+    fetch('http://localhost:8000/api/themes', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setThemes(data["hydra:member"]))
       .catch((error) => console.error('Error fetching themes:', error));
-  }, []); 
+  }, []);
 
   // changement filtre test
   const handleFilterChange = (event) => {
