@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './ComponentsStyles/Articles.css';
-
 const Articles = () => {
     const [articles, setArticles] = useState([]);
     const [newArticle, setNewArticle] = useState({
@@ -8,6 +7,7 @@ const Articles = () => {
         resume: '',
         position: 0,
     });
+    
 
     useEffect(() => {
         // Fetch articles API with authentication token
@@ -30,8 +30,15 @@ const Articles = () => {
     }, []);
 
     const handleInputChange = (event) => {
+        
         const { name, value } = event.target;
-        setNewArticle({ ...newArticle, [name]: value });
+        console.log(name, value);
+        const article2 = {
+            ...newArticle,
+            [name]: (name === "position") && value ? Number(value): value
+        }
+        setNewArticle({ ...article2});
+        console.log(newArticle);
     };
 
     const handleSubmit = async (event) => {
