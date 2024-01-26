@@ -2,17 +2,17 @@ import "../styles/stylesHeader.css";
 import { useState, useEffect } from "react";
 
 export default function Header() {
-  const [utilisateur, setUtilisateur] = useState("user");
-  useEffect(() => {
-    fetch("http://localhost:8000/api/users/1")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setUtilisateur(data.nom);
-        console.log(data.nom);
-      });
-  });
+  // const [utilisateur, setUtilisateur] = useState("user");
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/api/users/1")
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setUtilisateur(data.nom);
+  //       console.log(data.nom);
+  //     });
+  // });
   return (
     <div className="header">
       <img
@@ -23,7 +23,7 @@ export default function Header() {
       <div className="info_compte_utilisateur" style={{ display: "flex" }}>
         <img src="#" alt="profil_utilisateur" />
 
-        <p> {utilisateur} </p>
+        <p>  </p>
       </div>
     </div>
   );

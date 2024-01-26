@@ -1,6 +1,7 @@
 // Content.js
 import React from "react";
 import Themes from '../ComponentsMenu/Themes.jsx';
+import Articles from '../ComponentsMenu/Articles.jsx';
 
 const Content = ({ selectedMenu }) => {
   switch (selectedMenu) {
@@ -13,7 +14,7 @@ const Content = ({ selectedMenu }) => {
     case "Pages":
       return <h1>Sites pages</h1>;
     case "Articles":
-      return <h1>articles test</h1>;
+      return <Articles/>;
     case "Commentaires":
       return <h1>Commentaires Content</h1>;
     case "Thèmes":
