@@ -30,7 +30,7 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\KixelAuthenticator
-            stateless: true
+            stateless: false # A true me donnais une erreur sur le /admin 
             
            
             

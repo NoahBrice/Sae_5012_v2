@@ -7,6 +7,7 @@ use App\Repository\BlocRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: BlocRepository::class)]
 #[ApiResource]
@@ -25,6 +26,26 @@ class Bloc
 
     #[ORM\Column(nullable: true)]
     private ?bool $notable = null;
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    //                          Vich                          //
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    /**
+     * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
+     */
+    
+    public ?File $file = null;
+
+    #[ORM\Column(nullable: true)]
+    public ?string $filePath = null;
+
+
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////
+    //                          Vich Fin                      //
+    ////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////   
 
     #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'bloc')]
     private Collection $pages;
@@ -49,12 +70,12 @@ class Bloc
         $this->reactions = new ArrayCollection();
     }
 
-    
+
     public function __toString()
     {
         return $this->getTitre();
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
