@@ -65,22 +65,27 @@ class Bloc
     //                          Vich Fin                      //
     ////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////   
-
+    #[Groups(['bloc:read','bloc:write'])]
     #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'bloc')]
     private Collection $pages;
-
+    
+    #[Groups(['bloc:read','bloc:write'])]
     #[ORM\ManyToOne(inversedBy: 'blocs')]
     private ?TypeBloc $TypeBloc = null;
 
+    #[Groups(['bloc:read','bloc:write'])]
     #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'blocs')]
     private Collection $article;
 
+    #[Groups(['bloc:read','bloc:write'])]
     #[ORM\OneToMany(mappedBy: 'bloc', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
+    #[Groups(['bloc:read','bloc:write'])]
     #[ORM\OneToMany(mappedBy: 'bloc', targetEntity: Reaction::class)]
     private Collection $reactions;
 
+    #[Groups(['bloc:read','bloc:write'])]
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
