@@ -27,3 +27,7 @@
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+#media
+public/media/*
+!public/media/gitignore

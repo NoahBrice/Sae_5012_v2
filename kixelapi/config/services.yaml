@@ -20,5 +20,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Encoder\MultipartDecoder:
+        tags:
+            - { name: 'serializer.decoder', format: 'multipart' }
+
+    App\Serializer\UploadedFileDenormalizer:
+        tags:
+            - { name: 'serializer.normalizer' }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

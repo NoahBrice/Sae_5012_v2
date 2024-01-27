@@ -8,9 +8,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use ApiPlatform\Metadata\ApiProperty;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: BlocRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['bloc:read']],
+    denormalizationContext: ['groups' => ['bloc:write']],
+    // types: ['https://schema.org/Book'],
+    operations: [
+        new GetCollection(),
+        new Post(inputFormats: ['multipart' => ['multipart/form-data']])
+    ]
+)]
 class Bloc
 {
     #[ORM\Id]
@@ -31,10 +45,15 @@ class Bloc
     //                          Vich                          //
     ////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////
-    /**
-     * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
-     */
-    
+
+
+    #[ApiProperty] //(types: ['https://schema.org/contentUrl'])
+    #[Groups(['bloc:read'])]
+    public ?string $contentUrl = null;
+
+
+    #[Vich\UploadableField(mapping: 'media_bloc', fileNameProperty: 'filePath')]
+    #[Groups(['bloc:write'])]
     public ?File $file = null;
 
     #[ORM\Column(nullable: true)]
@@ -61,6 +80,9 @@ class Bloc
 
     #[ORM\OneToMany(mappedBy: 'bloc', targetEntity: Reaction::class)]
     private Collection $reactions;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
@@ -236,6 +258,67 @@ class Bloc
                 $reaction->setBloc(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContentUrl(): ?string
+    {
+        return $this->contentUrl;
+    }
+
+    public function setContentUrl(?string $contentUrl): self
+    {
+        $this->contentUrl = $contentUrl;
+        return $this;
+    }
+
+    // public function getFile(): ?string
+    // {
+    //     return $this->file;
+    // }
+
+    // public function setFile(?string $file): self
+    // {
+    //     $this->file = $file;
+    //     return $this;
+    // }
+
+    public function setFile(?File $file = null): void
+    {
+        $this->file = $file;
+
+        if (null !== $file) {
+            // It is required that at least one field changes if you are using Doctrine,
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): self
+    {
+        $this->filePath = $filePath;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

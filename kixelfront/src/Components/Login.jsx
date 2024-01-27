@@ -71,7 +71,7 @@ const Login = ({ onLogin }) => {
           </button>
         </div>
       </div>
-      <ThreeScene />
+      {/* <ThreeScene /> */}
     </div>
   );
 };
