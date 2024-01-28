@@ -1,0 +1,43 @@
+.page-creation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input[type='text'],
+select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    box-shadow: inset -5px -5px 10px #cbced1, inset 5px 5px 10px #ffffff;
+    font-size: 16px;
+}
+
+select[multiple] {
+    height: 150px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    box-shadow: -5px -5px 10px #cbced1, 5px 5px 10px #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}

@@ -1,9 +1,10 @@
-// Themes.js
 import React, { useState, useEffect } from 'react';
-import './ComponentsStyles/Themes.css'; 
+import './ComponentsStyles/Themes.css';
+import { useTheme } from './ThemeContext.jsx'; 
 
 const Themes = () => {
-  const [themes, setThemes] = useState([]);
+  const { changeTheme } = useTheme(); // Get the changeTheme function from context
+  const [themes, setThemes] = useState([]); // Initialize the themes state
   const [selectedFilter, setSelectedFilter] = useState('chronologic'); 
 
   useEffect(() => {
@@ -26,24 +27,28 @@ const Themes = () => {
       .catch((error) => console.error('Error fetching themes:', error));
   }, []);
 
-  // changement filtre test
   const handleFilterChange = (event) => {
     setSelectedFilter(event.target.value);
+  };
+
+  const handleThemeClick = (themeName) => {
+    changeTheme(themeName); // Change the theme when a theme is clicked
   };
 
   return (
     <div className="themes-container">
       <h1>Themes</h1>
       <p>Select a filter:</p>
-
-      <div className="filter-element">      <select value={selectedFilter} onChange={handleFilterChange}>
-        <option value="chronologic">Chronologic</option>
-        {/* options */}
-      </select></div>
-    
+      <div className="filter-element">
+        <select value={selectedFilter} onChange={handleFilterChange}>
+          <option value="chronologic">Chronologic</option>
+          {/* options */}
+        </select>
+      </div>
       <div className="themes-list">
         {themes.map((theme) => (
-          <div key={theme.id} className="theme-item">
+          <div key={theme.id} className="theme-item" onClick={() => handleThemeClick(theme.nom)}>
+            {/* Pass theme name to handleThemeClick */}
             <img src="#" alt="img" />
             <div>
               <h2>{theme.nom}</h2>
@@ -57,3 +62,5 @@ const Themes = () => {
 };
 
 export default Themes;
+
+

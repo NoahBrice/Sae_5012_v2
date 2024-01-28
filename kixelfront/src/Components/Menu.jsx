@@ -51,19 +51,13 @@ export default function Menu() {
             <a href="#"> Data Sets </a>
           </li>
           <li>
-            <a href="#"> Statistiques </a>
-          </li>
-          <li>
-            <a href="#"> Mails </a>
-          </li>
-          <li>
             <a href="#"> Utilisateurs </a>
           </li>
           <li>
             <a href="#"> Media </a>
           </li>
           <li>
-            <a href="#"> Créer une page </a>
+            <a href="#" onClick={() => handleMenuClick("Créer une page")}> Créer une page </a>
           </li>
         </ul>
       </div>
