@@ -2,10 +2,6 @@ import "../styles/stylesMenu.css";
 import React, { useState } from "react";
 import Content from "./Content";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9aaf47f5d37db067f456b40836d14b057cd35da6
 
 export default function Menu() {
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -34,16 +30,16 @@ export default function Menu() {
             </a>
           </li>
           <li>
-            <a href="#"> Accueil </a>
+            <a href="#" onClick={() => handleMenuClick("Accueil")}> Accueil </a>
           </li>
           <li>
-            <a href="#"> Sites </a>
+            <a href="#" onClick={() => handleMenuClick("Sites")}> Sites </a>
           </li>
           <li>
-            <a href="#"> Pages </a>
+            <a href="#" onClick={() => handleMenuClick("Pages")}> Pages </a>
           </li>
           <li>
-            <a href="#"> Articles </a>
+            <a href="#" onClick={() => handleMenuClick("Articles")}> Articles </a>
           </li>
           <li>
             <a href="#"> Commentaires </a>
