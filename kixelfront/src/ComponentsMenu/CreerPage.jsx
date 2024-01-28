@@ -122,12 +122,14 @@ const PageCreation = () => {
                 <div className="form-group">
                     <label htmlFor="site">Select Site:</label>
                     <select
+
                         id="site"
                         name="site"
                         value={pageData.site}
                         onChange={handleInputChange}
                         required
                     >
+                        <option value =""></option>
                         {sites.map((site) => (
                             <option key={site['@id']} value={site['@id']}>
                                 {site.nom}

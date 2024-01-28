@@ -267,7 +267,7 @@ const Articles = () => {
                                 </select>
 
                                 {/* Render additional fields based on bloc type */}
-                                {newBloc.typeBloc === '/api/type_blocs/3' && (
+                                {newBloc.typeBloc === '/api/type_blocs/5' && (
                                     <input
                                         type="text"
                                         id="titre"
@@ -277,7 +277,7 @@ const Articles = () => {
                                         onChange={(e) => setNewBloc({ ...newBloc, titre: e.target.value })}
                                     />
                                 )}
-                                {newBloc.typeBloc === '/api/type_blocs/2' && (
+                                {newBloc.typeBloc === '/api/type_blocs/4' && (
                                     <textarea
                                         id="contenu"
                                         name="contenu"
@@ -286,7 +286,7 @@ const Articles = () => {
                                         onChange={(e) => setNewBloc({ ...newBloc, contenu: e.target.value })}
                                     />
                                 )}
-                                {newBloc.typeBloc === '/api/type_blocs/4' && (
+                                {newBloc.typeBloc === '/api/type_blocs/2' && (
                                     <input
                                         type="file"
                                         id="image"
@@ -295,7 +295,7 @@ const Articles = () => {
                                         onChange={(e) => console.log(e.target.files[0])} // Handle image upload
                                     />
                                 )}
-                                {newBloc.typeBloc === '/api/type_blocs/5"' && (
+                                {newBloc.typeBloc === '/api/type_blocs/3"' && (
                                     <p>Test dashboard</p>
                                 )}
 

@@ -83,10 +83,30 @@ class AppFixtures extends Fixture
         $typeBloc = new TypeBloc;
         $typeBloc->setNom("typeBloc de test"); // 
         $typeBloc->setInfoBlocPath("/"); // 
-        
-
         $manager->persist($typeBloc);
+
+        $typeBloc = new TypeBloc;
+        $typeBloc->setNom("image"); // 
+        $typeBloc->setInfoBlocPath("/"); // 
+        $manager->persist($typeBloc);  
+
+        $typeBloc = new TypeBloc;
+        $typeBloc->setNom("graph"); // 
+        $typeBloc->setInfoBlocPath("/"); // 
+        $manager->persist($typeBloc);
+
+        $typeBloc = new TypeBloc;
+        $typeBloc->setNom("texte"); // 
+        $typeBloc->setInfoBlocPath("/"); // 
+        $manager->persist($typeBloc);
+        
+        $typeBloc = new TypeBloc;
+        $typeBloc->setNom("titre"); // 
+        $typeBloc->setInfoBlocPath("/"); // 
+        $manager->persist($typeBloc);
+
         $manager->flush();
+
 
         //////////////////////////
         // Thèmes

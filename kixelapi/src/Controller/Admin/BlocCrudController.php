@@ -21,22 +21,24 @@ class BlocCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->onlyOnIndex(),
-            AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getTypeBloc();
-                $label = "";
-                // dd($entity);
-                if($associatedEntitys != null){
-                    foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
-                    }
+            AssociationField::new('TypeBloc')
+            ->setCrudController(TypeBlocCrudController::class),
+            // AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+            //     $associatedEntitys = $entity->getTypeBloc();
+            //     $label = "";
+            //     // dd($entity);
+            //     if($associatedEntitys != null){
+            //         foreach ($associatedEntitys as $associatedEntity) {
+            //             $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+            //         }
                     
-                }
-                else{
-                    return "empty";
-                }
-                return $label;
+            //     }
+            //     else{
+            //         return "empty";
+            //     }
+            //     return $label;
 
-            }),
+            // }),
             "titre",
             "contenu",
             "notable",
