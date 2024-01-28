@@ -23,7 +23,7 @@ class TypeBloc
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $info_bloc_path = null;
 
-    #[ORM\OneToMany(mappedBy: 'TypeBloc', targetEntity: Bloc::class)]
+    #[ORM\OneToMany(mappedBy: 'typeBloc', targetEntity: Bloc::class)]
     private Collection $blocs;
 
     public function __construct()
@@ -34,7 +34,7 @@ class TypeBloc
     
     public function __toString()
     {
-        return $this->getNom();
+        return $this->getNom() ?: '';
     }
     
 

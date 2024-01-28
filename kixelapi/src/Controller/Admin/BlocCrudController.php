@@ -16,27 +16,28 @@ class BlocCrudController extends AbstractCrudController
         return Bloc::class;
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
+
         return [
             IdField::new('id')->onlyOnIndex(),
-            AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getTypeBloc();
-                $label = "";
-                // dd($entity);
-                if($associatedEntitys != null){
-                    foreach ($associatedEntitys as $associatedEntity) {
-                        $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
-                    }
-                    
-                }
-                else{
-                    return "empty";
-                }
-                return $label;
+            // AssociationField::new('TypeBloc')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+            //     $associatedEntitys = $entity->getTypeBloc();
+            //     $label = "";
+            //     // dd($entity);
+            //     if ($associatedEntitys != null) {
+            //         foreach ($associatedEntitys as $associatedEntity) {
+            //             $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+            //         }
+            //     } else {
+            //         return "empty";
+            //     }
+            //     return $label;
+            // }),
+            AssociationField::new('TypeBloc')
+            ->setCrudController(TypeBlocCrudController::class),
 
-            }),
             "titre",
             "contenu",
             "notable",
@@ -55,17 +56,18 @@ class BlocCrudController extends AbstractCrudController
                     $label = $label . $associatedEntity->getContenu() . "(" . $associatedEntity->getId() . ")" . ", ";
                 }
                 return $label;
-            }), 
-           AssociationField::new('reactions')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getReactions();
-                $label = "";
-                foreach ($associatedEntitys as $associatedEntity) {
-                    $label = $label . $associatedEntity->getNote() . "(" . $associatedEntity->getId() . ")" . ", ";
-                }
-                return $label;
-            })
- 
+            }),
+            // AssociationField::new('reactions')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+            //     $associatedEntitys = $entity->getReactions();
+            //     $label = "";
+            //     foreach ($associatedEntitys as $associatedEntity) {
+            //         $label = $label . $associatedEntity->getNote() . "(" . $associatedEntity->getId() . ")" . ", ";
+            //     }
+            //     return $label;
+            // })
+            AssociationField::new('reactions')
+            ->setCrudController(Reactions::class)
+
         ];
     }
-
 }
