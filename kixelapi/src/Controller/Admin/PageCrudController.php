@@ -49,23 +49,25 @@ class PageCrudController extends AbstractCrudController
                 }
                 return $label;
             }),
-            AssociationField::new('site')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
-                $associatedEntitys = $entity->getSite();
-                $label = "";
-                if($associatedEntitys != null){
-                    if ($associatedEntitys instanceof Collection) {
-                        foreach ($associatedEntitys as $associatedEntity) {
-                            $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
-                        }
-                    } else {
-                        $label = $label . $associatedEntitys->getNom() . "(" . $associatedEntitys->getId() . ")" . ", ";
-                    }
-                }
-                else{
-                    return "empty";
-                }   
-                return $label;
-            })
+            // AssociationField::new('site')->setFormTypeOption('by_reference', false)->formatValue(function ($value, $entity) {
+            //     $associatedEntitys = $entity->getSite();
+            //     $label = "";
+            //     if($associatedEntitys != null){
+            //         if ($associatedEntitys instanceof Collection) {
+            //             foreach ($associatedEntitys as $associatedEntity) {
+            //                 $label = $label . $associatedEntity->getNom() . "(" . $associatedEntity->getId() . ")" . ", ";
+            //             }
+            //         } else {
+            //             $label = $label . $associatedEntitys->getNom() . "(" . $associatedEntitys->getId() . ")" . ", ";
+            //         }
+            //     }
+            //     else{
+            //         return "empty";
+            //     }   
+            //     return $label;
+            // })
+            AssociationField::new('site')
+            ->setCrudController(Site::class),
         ];
     }
     
