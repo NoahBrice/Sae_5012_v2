@@ -55,10 +55,28 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_PROVIDER]
+        ROLE_PROVIDER: [ROLE_DESIGNER]
+        ROLE_DESIGNER: [ROLE_EDITEUR]
+        ROLE_EDITEUR: [ROLE_AUTHEUR]
+        ROLE_AUTHEUR: [ROLE_SUBSCRIBED]
+        ROLE_SUBSCRIBED: [ROLE_VISITEUR]
+        ROLE_VISITEUR:
+
     access_control:
 
-         - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
+         
+        - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/reactions, roles: ROLE_SUBSCRIBED }
+        - { path: ^/api/commentaires, roles: ROLE_SUBSCRIBED }
+        - { path: ^/api/articles, roles: ROLE_AUTHEUR }
+        - { path: ^/api/data_sets, roles: ROLE_PROVIDER }
+        - { path: ^/admin/*, roles: ROLE_ADMIN }
+
         # - { path: ^/profile, roles: ROLE_USER }
+
+
 
 
 when@test:

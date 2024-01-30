@@ -8,12 +8,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
 
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['bloc_object:read']],
     types: ['https://schema.org/MediaObject'])]
+    #[Get(security: "is_granted('ROLE_AUTHEUR')")]
+    #[GetCollection(security: "is_granted('ROLE_AUTHEUR')")]
+    #[Put(security: "is_granted('ROLE_AUTHEUR')")]
+    #[Delete(security: "is_granted('ROLE_AUTHEUR')")]
 class Article
 {
     #[ORM\Id]
