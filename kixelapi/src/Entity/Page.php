@@ -7,26 +7,33 @@ use App\Repository\PageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['bloc_object:read']],
+    types: ['https://schema.org/MediaObject'])]
 class Page
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['bloc_object:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?string $nom = null;
 
     #[ORM\ManyToMany(targetEntity: Bloc::class, inversedBy: 'pages')]
     private Collection $bloc;
 
     #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'pages')]
+    // #[Groups(['bloc_object:read'])]
     private Collection $article;
 
     #[ORM\ManyToOne(inversedBy: 'pages')]
+    // #[Groups(['bloc_object:read'])]
     private ?Site $site = null;
 
     public function __construct()

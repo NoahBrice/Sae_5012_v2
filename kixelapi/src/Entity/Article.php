@@ -7,9 +7,13 @@ use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['bloc_object:read']],
+    types: ['https://schema.org/MediaObject'])]
 class Article
 {
     #[ORM\Id]
@@ -18,18 +22,23 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?string $resume = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?int $position = null;
 
     #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'article')]
+    #[Groups(['bloc_object:read'])]
     private Collection $pages;
 
     #[ORM\ManyToMany(targetEntity: Bloc::class, mappedBy: 'article')]
+    #[Groups(['bloc_object:read'])]
     private Collection $blocs;
 
     public function __construct()

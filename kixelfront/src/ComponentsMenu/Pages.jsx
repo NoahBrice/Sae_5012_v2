@@ -71,17 +71,7 @@ const Pages = () => {
             <div className="pages-list">
                 {pages.map((page) => (
                     <div key={page.id} className="page-item" onClick={() => handlePageClick(page.id)}>
-                        <h2>{page.nom}</h2>
-                        <div className="articles-preview">
-                            <h3>Articles</h3>
-                            {articles.map((article) => (
-                                <div key={article.id} className="article-preview">
-                                    <p>{article.titre}</p>
-                                    <p>{article.resume}</p>
-                                    <p>{article.position}</p>
-                                </div>
-                            ))}
-                        </div>
+                        <h2>- Title - <br></br>{page.nom}</h2>
                     </div>
                 ))}
             </div>

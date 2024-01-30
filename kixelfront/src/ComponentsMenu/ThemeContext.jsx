@@ -1,5 +1,5 @@
 // ThemeContext.js
-import { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 export const ThemeContext = createContext();
 
@@ -8,7 +8,15 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('default');
+  const [theme, setTheme] = useState(() => {
+    // Read the selected theme from local storage or set a default theme
+    return localStorage.getItem('theme') || 'default';
+  });
+
+  useEffect(() => {
+    // Save the selected theme to local storage whenever it changes
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const themes = {
     default: {
@@ -26,9 +34,16 @@ export const ThemeProvider = ({ children }) => {
     setTheme(selectedTheme);
   };
 
+  const addTheme = (themeName, backgroundColor, textColor) => {
+    themes[themeName] = { backgroundColor, textColor };
+    setTheme(themeName);
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, changeTheme, themes }}>
+    <ThemeContext.Provider value={{ theme, changeTheme, themes, addTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
+
+

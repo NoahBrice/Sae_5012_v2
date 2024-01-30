@@ -1,10 +1,14 @@
 .pages-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
     padding: 20px;
 }
 
+.pages-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
 .page-item {
     background-color: #f0f0f0;
     border-radius: 20px;

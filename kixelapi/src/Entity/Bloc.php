@@ -7,9 +7,12 @@ use App\Repository\BlocRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BlocRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['bloc_object:read']],
+    types: ['https://schema.org/MediaObject'])]
 class Bloc
 {
     #[ORM\Id]
@@ -18,27 +21,35 @@ class Bloc
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?string $contenu = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?bool $notable = null;
 
     #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'bloc')]
+    // #[Groups(['bloc_object:read'])]
     private Collection $pages;
 
     #[ORM\ManyToOne(inversedBy: 'blocs')]
+    #[Groups(['bloc_object:read'])]
     private ?TypeBloc $TypeBloc = null;
 
     #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'blocs')]
+    // #[Groups(['bloc_object:read'])]
     private Collection $article;
 
     #[ORM\OneToMany(mappedBy: 'bloc', targetEntity: Commentaire::class)]
+    #[Groups(['bloc_object:read'])]
     private Collection $commentaires;
 
     #[ORM\OneToMany(mappedBy: 'bloc', targetEntity: Reaction::class)]
+    #[Groups(['bloc_object:read'])]
     private Collection $reactions;
 
     public function __construct()

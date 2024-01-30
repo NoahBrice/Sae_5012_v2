@@ -1,39 +1,42 @@
-
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-// ThreeScene.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { CopyShader } from 'three/addons/shaders/CopyShader.js';
-// import { RoundedBoxGeometry } from './three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 const ThreeScene = () => {
+  const mountRef = useRef(null);
+
+
   useEffect(() => {
-
-    // init scene, de la caméra et du rendu
+    // const audio = new Audio('./public/drumnbass_trop_bien.mp3');
+    // audio.play();
+    // Initialize scene, camera, and renderer
     const scene = new THREE.Scene();
-
-    // ratio approprié 
     const aspect = window.innerWidth / window.innerHeight;
     const camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-
-    // taille de la fenêtre pour rendu
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
 
-    // composer de mort (pas php xdddd)
+    // Mount renderer to DOM
+    const mount = mountRef.current;
+    mount.appendChild(renderer.domElement);
+
+    // Composer
     const composer = new EffectComposer(renderer);
 
-    // RenderPass 
+    // RenderPass
     const renderPass = new RenderPass(scene, camera);
     composer.addPass(renderPass);
 
-    // ShaderPass 
+    // BloomPass
+    const bloomPass = new UnrealBloomPass();
+    composer.addPass(bloomPass);
+
+    // MotionBlur ShaderPass
     const motionBlurShader = {
       uniforms: {
         tDiffuse: { value: null },
@@ -47,7 +50,7 @@ const ThreeScene = () => {
             vUv = uv;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
-    `,
+      `,
       fragmentShader: `
         uniform sampler2D tDiffuse;
         uniform sampler2D tVelocity;
@@ -62,44 +65,30 @@ const ThreeScene = () => {
             }
             gl_FragColor = result / 61.0;
         }
-    `,
+      `,
     };
+    const motionBlurPass = new ShaderPass(motionBlurShader);
+    composer.addPass(motionBlurPass);
 
-    // Ajout d'un sol incliné
-    const groundGeometry = new THREE.PlaneGeometry(200, 200);
-    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x005300, side: THREE.DoubleSide });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = - Math.PI / 2; // Incliner le sol
-    scene.add(ground);
-
-    // lumière ambiante
+    // Ambient Light
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    // lumière directionnelle
+    // Directional Light
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
 
-    // Chargement du modèle 3D de kiwi
+    // Load 3D model
     const loader = new GLTFLoader();
-    let kiwi;
-    let mixer;
-
-    loader.load('model/low_poly_kiwi_run/scene.gltf', (gltf) => {
-      kiwi = gltf.scene;
-      kiwi.scale.set(50, 50, 50); // taille kiwi
-      kiwi.position.set(1, 0.5, 1); // position
+    loader.load('./model/low_poly_kiwi_run/scene.gltf', (gltf) => {
+      const kiwi = gltf.scene;
+      kiwi.scale.set(50, 50, 50);
+      kiwi.position.set(3, 2, 4);
       scene.add(kiwi);
-
-      // Initialiser le mixer pour les animations
-      mixer = new THREE.AnimationMixer(kiwi);
-      gltf.animations.forEach((clip) => {
-        mixer.clipAction(clip).play();
-      });
     });
 
-    //  trois boîtes avec des faces arrondies
+    // Box Generator
     class TextBox {
       constructor() {
         this.box = this.createBox();
@@ -109,14 +98,23 @@ const ThreeScene = () => {
 
       createBox() {
         const boxGeometry = new THREE.BoxGeometry(5, 5, 5);
-        const boxMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
-        return new THREE.Mesh(boxGeometry, boxMaterial);
+
+        const hue = Math.random() * 0.1 + 0.6; // Adjust the range as needed
+        const color = new THREE.Color().setHSL(hue, 0.7, 0.5);
+        const boxMaterial = new THREE.MeshStandardMaterial({
+          color: color,
+          metalness: 1,
+          roughness: 0.5,
+        });
+        return new THREE.Mesh(new THREE.BoxGeometry(5, 5, 5), boxMaterial);
       }
 
       setRotationSpeed() {
-        this.box.rotationSpeedX = Math.random() * 0.2;
-        this.box.rotationSpeedY = Math.random() * 0.2;
+        // Set a slower rotation speed
+        this.box.rotationSpeedX = Math.random() * 0.005;
+        this.box.rotationSpeedY = Math.random() * 0.005;
       }
+
 
       addText() {
         const blockNames = ['<Article>', '<p>', '<title>', '<div>', '<img>', '<ul>', '<li>'];
@@ -136,83 +134,125 @@ const ThreeScene = () => {
       }
     }
 
-    function generateTorusKnots() {
-      for (let i = 0; i < 12; i++) {
-        const torusKnotGeometry = new THREE.TorusKnotGeometry(5, 1, 100, 16);
-        const torusKnotMaterial = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
-
-        const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial);
-        torusKnot.position.x = Math.random() * 80 - 40;
-        torusKnot.position.y = Math.random() * 40 + 30; // Ajuster la hauteur selon vos besoins
-        torusKnot.position.z = Math.random() * 80 - 40;
-
-        scene.add(torusKnot);
-      }
-    }
-
     function generateBoxes() {
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < 69; i++) {
         const textBox = new TextBox();
         textBox.box.position.x = Math.random() * 80 - 40;
         textBox.box.position.z = Math.random() * 80 - 40;
-        textBox.box.position.y = 5;
-        const rotationSpeedX = Math.random() * 0.2;
-        const rotationSpeedY = Math.random() * 0.2;
-
+        textBox.box.position.y = Math.random() * 80 - 40;
         scene.add(textBox.box);
       }
     }
 
-    // TorusKnots (j'adore ce mot)
-    generateTorusKnots();
-    // les boîtes
+    // Boxes
     generateBoxes();
+    // Create a particle geometry (e.g., points)
+    const particleGeometry = new THREE.BufferGeometry();
+    const vertices = []; // Array to store particle positions
+    const cameraMovementSpeed = 0.001; // Adjust this value to control the speed of camera movement
 
-    // caméra
+    let cameraRotation = 0;
+
+    function animateCamera() {
+      // Calculate new camera position
+      const newX = Math.sin(cameraRotation) * 50; // Adjust the radius as needed
+      const newZ = Math.cos(cameraRotation) * 50; // Adjust the radius as needed
+      const newY = 30; // Adjust the height as needed
+
+      // Update camera position
+      camera.position.x += (newX - camera.position.x) * cameraMovementSpeed;
+      camera.position.y += (newY - camera.position.y) * cameraMovementSpeed;
+      camera.position.z += (newZ - camera.position.z) * cameraMovementSpeed;
+
+      // Increment camera rotation
+      cameraRotation += 0.0015; // Adjust the rotation speed as needed
+
+      // Update camera lookAt position
+      camera.lookAt(scene.position);
+    }
+
+    // Add random particle positions
+    for (let i = 0; i < 1000; i++) {
+      const x = Math.random() * 100 - 50;
+      const y = Math.random() * 100 - 50;
+      const z = Math.random() * 100 - 50;
+      vertices.push(x, y, z);
+    }
+
+    particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    // Define particle material
+    const particleMaterial = new THREE.PointsMaterial({
+      color: 0x2d4ca8,
+      size: 1,
+      transparent: true,
+      opacity: 0.8,
+    });
+
+    // Create particle system
+    const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+
+    // Add particle system to the scene
+    scene.add(particleSystem);
+
+    // Add some movement and animation to the particles
+    function animateParticles() {
+      const positionsArray = particleGeometry.attributes.position.array;
+
+      // Adjust the speed of movement by scaling the factor
+      const speedFactor = 0.003; // Adjust this value to control the speed
+
+      // Update the positions of the particles
+      for (let i = 0; i < positionsArray.length; i += 3) {
+        // Update the x, y, and z positions of each particle
+        positionsArray[i] += (Math.random() - 0.8) * speedFactor; // x-coordinate
+        positionsArray[i + 1] += (Math.random() - 0.8) * speedFactor; // y-coordinate
+        positionsArray[i + 2] += (Math.random() - 0.8) * speedFactor; // z-coordinate
+      }
+
+      // Update the attribute buffer
+      particleGeometry.attributes.position.needsUpdate = true;
+
+      // Schedule next animation frame
+      requestAnimationFrame(animateParticles);
+    }
+
+    // Start the particle animation
+    animateParticles();
+
+
+
+    // Camera
     camera.position.z = 30;
 
-    // OrbitControls pour l'interaction
+    // OrbitControls
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; //animation loop(pour el kiwito)
+    controls.enableDamping = true;
     controls.dampingFactor = 0.25;
     controls.screenSpacePanning = false;
     controls.maxPolarAngle = Math.PI / 2;
 
-    const motionBlurPass = new ShaderPass(motionBlurShader);
-    composer.addPass(motionBlurPass);
-
-    // UnrealBloomPass pour un effet de bloom (optionnel) (ca marche pas frrrrrrrrr)
-    const bloomPass = new UnrealBloomPass();
-    composer.addPass(bloomPass);
-
-    // Animation
+    // Animation Loop
     const animate = () => {
+
       requestAnimationFrame(animate);
-
-      // mixer pour les animations
-      if (mixer) {
-        mixer.update(0.01);
-      }
-
+      animateCamera();
+      // Rotate Boxes
       scene.children.forEach((object) => {
-        if (object instanceof TextBox) {
-          object.box.rotation.x += object.box.rotationSpeedX;
-          object.box.rotation.y += object.box.rotationSpeedY;
+        if (object instanceof THREE.Mesh) {
+          object.rotation.x += object.rotationSpeedX;
+          object.rotation.y += object.rotationSpeedY;
         }
       });
 
-      //  OrbitControls
-      controls.update();
-
-      // scène avec le composer askip faut ça jsp
-      composer.render();
-
+      // Update Mixer (if using animations)
+      // composer.render();
       renderer.render(scene, camera);
     };
 
     animate();
 
-    // Gestion du redimensionnement de la fenêtre
+    // Resize Handler
     const handleResize = () => {
       const newAspect = window.innerWidth / window.innerHeight;
       camera.aspect = newAspect;
@@ -220,8 +260,17 @@ const ThreeScene = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
-    // Écouteur d'événement pour le redimensionnement de la fenêtre
     window.addEventListener('resize', handleResize);
-  });
-}
+
+    // Cleanup
+    return () => {
+      mount.removeChild(renderer.domElement);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return <div ref={mountRef} className='scene' />;
+};
+
 export default ThreeScene;
+

@@ -21,7 +21,7 @@ export default function Header() {
         style={{ maxWidth: "3%", maxHeight: "3%" }}
       />
       <div className="info_compte_utilisateur" style={{ display: "flex" }}>
-        <img src="#" alt="profil_utilisateur" />
+        <img src="#" alt="" />
 
         <p>  </p>
       </div>

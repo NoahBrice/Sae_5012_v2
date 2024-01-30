@@ -7,9 +7,12 @@ use App\Repository\TypeBlocRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TypeBlocRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['bloc_object:read']],
+    types: ['https://schema.org/MediaObject'])]
 class TypeBloc
 {
     #[ORM\Id]
@@ -18,6 +21,7 @@ class TypeBloc
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['bloc_object:read'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]

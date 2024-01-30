@@ -1,6 +1,6 @@
 // Content.js
 import React from "react";
-import Themes from '../ComponentsMenu/Themes.jsx';
+import ThemeManager from '../ComponentsMenu/Themes.jsx';
 import Articles from '../ComponentsMenu/Articles.jsx';
 import Pages from '../ComponentsMenu/Pages.jsx';
 import PageCreation from '../ComponentsMenu/CreerPage.jsx';
@@ -20,7 +20,7 @@ const Content = ({ selectedMenu }) => {
     case "Commentaires":
       return <h1>Commentaires Content</h1>;
     case "Thèmes":
-      return <Themes/>;
+      return <ThemeManager/>;
     case "Data Sets":
       return <h1>Data Sets Content</h1>;
     case "Utilisateurs":

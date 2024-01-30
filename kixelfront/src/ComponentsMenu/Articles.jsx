@@ -236,7 +236,7 @@ const Articles = () => {
                             >
                                 {blocs.map((bloc) => (
                                     <option key={bloc.id} value={bloc['@id']}>
-                                        Type bloc ({bloc.nom}) | Contenu : {bloc.titre} {bloc.contenu}
+                                        Type bloc : {bloc.TypeBloc.nom} | Content : {bloc.titre} {bloc.contenu}
                                     </option>
                                 ))}
                             </select>
@@ -312,17 +312,30 @@ const Articles = () => {
                     <span>{showForm ? '✕' : '+'}</span>
                 </div>
                 {articles.map((article) => {
-
                     return (
-                        <div key={article.id} className="article-item">
+                        <div key={article["@id"]} className="article-item">
                             <h2>{article.titre}</h2>
-                            <p>{article.resume}</p>
+                            <p><i>{article.resume}</i></p>
                             <p>Position: {article.position}</p>
-                            <p>Pages: {article.pages.join(', ')}</p>
-                            <p>Blocs: {article.blocs.join(', ')}</p>
+                            <p><b><u>Associated Pages:</u></b></p>
+                            <div>
+                                {article.pages.map((page, index) => (
+                                    <div> - {page.nom}</div>
+                                ))}
+                            </div>
+                            <p><b><u>Blocs:</u></b></p>
+                            <div>
+                                {article.blocs.map((bloc, index) => (
+                                    <div className='bloc'>
+                                        <p><b><u>Title:</u></b> {bloc.titre}</p>
+                                        <p><u>Content:</u> {bloc.contenu}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     );
                 })}
+
             </div>
 
 

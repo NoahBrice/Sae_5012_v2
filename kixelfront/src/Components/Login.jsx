@@ -56,12 +56,12 @@ const Login = ({ onLogin }) => {
         </div>
         <div className="login-form-area">
           <p className="connect">
-            <b>Se connecter</b>
+            <b> Connect </b>
           </p>
           <div className="connect-box">
             <div className="login-inputs">
               <label htmlFor="username">
-                <b>ID :</b>
+                <b>Email :</b>
               </label>
               <input
                 type="text"
@@ -70,7 +70,7 @@ const Login = ({ onLogin }) => {
                 onChange={(e) => setUsername(e.target.value)}
               />
               <label htmlFor="password">
-                <b>Mot de passe :</b>
+                <b> Password :</b>
               </label>
               <input
                 type="password"
@@ -81,11 +81,11 @@ const Login = ({ onLogin }) => {
             </div>
           </div>
           <button type="submit" onClick={handleSubmit}>
-            Valider
+            Login
           </button>
         </div>
       </div>
-      {/* <ThreeScene /> */}
+      <ThreeScene />
     </div>
   );
 };
